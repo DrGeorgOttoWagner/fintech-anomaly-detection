@@ -1,0 +1,42 @@
+# --- Runtime data: uploads, datasets, experiments, reports (may contain sensitive records)
+/var/
+*.sqlite3
+*.sqlite3-*
+predictions/
+
+# --- Never commit datasets, documents or private material
+*.csv
+*.parquet
+*.pq
+*.pdf
+!docs/**/*.pdf
+Dataset/
+Doc/
+
+# --- Secrets / local configuration
+.env
+.env.*
+!.env.example
+
+# --- Python
+backend/.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/blob-report/
+*.tsbuildinfo
+
+# --- Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
