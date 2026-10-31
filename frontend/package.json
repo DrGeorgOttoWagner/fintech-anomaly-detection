@@ -1,6 +1,10 @@
 {
   "name": "ftad-frontend",
   "private": true,
+  "author": {
+    "name": "Georg-Otto Wagner",
+    "email": "georg-otto.wagner@outlook.com"
+  },
   "version": "1.0.0",
   "type": "module",
   "scripts": {

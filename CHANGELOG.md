@@ -3,6 +3,21 @@
 All notable changes to FinTech Anomaly Detection (FTAD) are documented here.
 The project follows [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+Documentation and presentation only; no change to models, metrics or methodology.
+
+### Added
+- Documentation set: getting started, user guide, generic research workflow, metrics guide, architecture
+  and reproducibility (`docs/`).
+- Credit-card fraud research showcase with workflow, methodology, results, aggregate tables and figures
+  (`examples/credit-card-fraud/`). The dataset itself is not included.
+- Synthetic demo dataset and generator (`demo/synthetic/`); all UI screenshots regenerated on it.
+
+### Changed
+- The fraud-domain report appendix is now an "Analysis coverage" table.
+- Documentation file names are lower-case; author and maintainer metadata were added.
+
 ## [1.0.0] — 2026-10-31
 
 First stable local research release. Feature scope frozen.

@@ -3,6 +3,10 @@
 FTAD is a single-machine application: one FastAPI process serves the REST API and the built
 React UI; model training runs in a separate worker process. Everything binds to `127.0.0.1`.
 
+> **Data remains local to the analyst's machine.** Uploaded files, parsed datasets, models, scores and
+> reports are written only to the local data directory (`FTAD_DATA_DIR`, default `var/`). FTAD makes no
+> outbound network calls, sends no telemetry and bundles its fonts.
+
 ```mermaid
 flowchart LR
   subgraph Browser
@@ -77,6 +81,14 @@ var/
 ├── predictions/                 inference outputs
 └── reports/<rep>/               report.md/html, tables/*.csv, figures/*.png|svg, manifest.json
 ```
+
+## Frontend
+
+React 19 + TypeScript, built with Vite, styled with Tailwind CSS, charts with Recharts. In production
+the built UI (`frontend/dist`) is served by the FastAPI process; in development Vite serves it on
+:5173 and proxies `/api`. Each page corresponds to one workflow step (Overview, Datasets, Schema
+Mapping, Exploratory Analysis, Experiment Studio, ML Benchmark, Model Evaluation, Anomaly Explorer,
+Score New Data, Research Reports).
 
 ## Security & privacy
 

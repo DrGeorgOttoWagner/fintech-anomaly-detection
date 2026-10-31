@@ -1,0 +1,7 @@
+study,profile,allocation,method,train_records,train_fraud,validation_records,validation_fraud,test_records,test_fraud
+dupsafe,A,70/15/15,group,199336,361,42761,63,42710,68
+dupsafe,B,80/10/10,group,227847,410,28461,49,28499,33
+dupsafe,C,60/20/20,group,170847,319,56985,81,56975,92
+stratified,A,70/15/15,stratified,199364,344,42721,74,42722,74
+stratified,B,80/10/10,stratified,227845,394,28481,49,28481,49
+stratified,C,60/20/20,stratified,170884,295,56961,98,56962,99

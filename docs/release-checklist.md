@@ -41,7 +41,7 @@ fraud-detection service, and no trained model is claimed to be universally valid
 | Frontend type-check (tsc) + lint (oxlint) | pass (0 errors) |
 | Production build (vite) | pass |
 | Browser acceptance workflow — synthetic fixture | 1/1 passed |
-| Browser acceptance workflow — real `creditcard.csv` | 1/1 passed |
+| Browser acceptance workflow — public credit-card fraud dataset (local copy) | 1/1 passed |
 
 Workflow steps covered by the browser test: 1 startup · 2 empty dataset state · 3 browser upload
 (native file chooser) · 4 schema mapping · 5 EDA (descriptive, imbalance, amount, time, features,
@@ -55,4 +55,4 @@ API responsive during training) · 8 model evaluation and threshold changes · 9
 - [x] Startup instructions (`scripts/setup.sh`, `scripts/start.sh`) and macOS requirements
 - [x] Screenshots regenerated from the release build
 - [x] No secrets, datasets, private documents, PDFs, runtime data or personal paths tracked
-- [x] Not pushed or published
+- [x] Release tagged as `v1.0.0`

@@ -1,0 +1,13 @@
+property,value
+Records,"284,807"
+Columns,31
+Fraudulent transactions (Class = 1),492
+Genuine transactions (Class = 0),"284,315"
+Fraud prevalence,0.1727 %
+Genuine : fraud ratio,577.9 : 1
+Missing cells,0
+Exact duplicate rows beyond first occurrence,"1,081"
+Elapsed time span,"0–172,792 s (≈ 48 h)"
+Accuracy of always predicting 'genuine',99.8273 % (fraud recall 0)
+Average precision of a random ranking (= prevalence),0.0017
+File SHA-256,76274b691b16a6c49d3f159c883398e03ccd6d1ee12d9d8ee38f4b4b98551a89

@@ -1,0 +1,7 @@
+profile,learning,selected_by_validation_ap,val_ap,test_ap,test_precision,test_recall,test_f1,tp,fp,fn,n_test_fraud
+A (70/15/15),supervised,CatBoost,0.8349,0.8415,0.9333,0.7568,0.8358,56,4,18,74
+A (70/15/15),unsupervised,Isolation Forest,0.1348,0.1517,0.2609,0.2432,0.2517,18,51,56,74
+B (80/10/10),supervised,Extra Trees,0.8658,0.8901,0.9333,0.8571,0.8936,42,3,7,49
+B (80/10/10),unsupervised,Isolation Forest,0.1525,0.1562,0.2222,0.3673,0.2769,18,63,31,49
+C (60/20/20),supervised,XGBoost,0.8267,0.8773,0.8925,0.8384,0.8646,83,10,16,99
+C (60/20/20),unsupervised,Isolation Forest,0.1097,0.1274,0.1731,0.2727,0.2118,27,129,72,99

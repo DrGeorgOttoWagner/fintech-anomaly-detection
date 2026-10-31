@@ -8,6 +8,8 @@ version = "1.0.0"
 description = "FinTech Anomaly Detection — local financial anomaly detection and ML research platform"
 readme = "../README.md"
 license = { text = "MIT" }
+authors = [{ name = "Georg-Otto Wagner" }]
+maintainers = [{ name = "Georg-Otto Wagner", email = "georg-otto.wagner@outlook.com" }]
 requires-python = ">=3.12"
 dependencies = [
   "fastapi>=0.115",

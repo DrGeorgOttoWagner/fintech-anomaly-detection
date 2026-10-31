@@ -1,0 +1,21 @@
+algorithm,learning,training_rows,training_budget,train_seconds,inference_ms_per_1k_rows
+One-Class SVM,unsupervised,10000,capped stratified subsample,0.1385,16.4835
+K-Nearest Neighbors,supervised,50000,capped stratified subsample,0.2085,16.6974
+Support Vector Machine (RBF),supervised,20000,capped stratified subsample,0.3617,29.9855
+Local Outlier Factor,unsupervised,30000,capped stratified subsample,0.4826,10.9229
+Dummy (majority class),supervised,199364,full training partition,0.9759,0.5473
+Gaussian Naive Bayes,supervised,199364,full training partition,1.0139,0.5265
+Ridge Classifier,supervised,199364,full training partition,1.0657,0.4364
+Linear Discriminant Analysis,supervised,199364,full training partition,1.2264,0.4546
+Isolation Forest,unsupervised,199364,full training partition,1.2363,6.1108
+Logistic Regression,supervised,199364,full training partition,1.5250,0.4349
+XGBoost,supervised,199364,full training partition,2.5552,0.6495
+LightGBM,supervised,199364,full training partition,3.6537,2.7403
+SGD Classifier (log-loss),supervised,199364,full training partition,4.3897,0.4532
+Extra Trees,supervised,199364,full training partition,4.4006,2.4532
+CatBoost,supervised,199364,full training partition,4.8648,0.3800
+Multi-Layer Perceptron,supervised,199364,full training partition,4.9098,0.7385
+HistGradientBoosting,supervised,199364,full training partition,5.2882,2.5318
+Decision Tree,supervised,199364,full training partition,6.2788,0.3542
+Random Forest,supervised,199364,full training partition,32.5785,2.1696
+Gradient Boosting,supervised,120000,capped stratified subsample,138.2468,1.1403

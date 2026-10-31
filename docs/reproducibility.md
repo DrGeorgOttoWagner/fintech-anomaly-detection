@@ -1,6 +1,18 @@
-# Reproducing experiments
+# Reproducibility
 
-Every experiment records what is needed to repeat it:
+FTAD separates three activities, and only the first is done by FTAD itself:
+
+| Activity | What it means | Who does it |
+|---|---|---|
+| **Computation** | Fitting pipelines, scoring, choosing thresholds and computing metrics under a stored protocol | FTAD |
+| **Recomputation** | Checking stored outputs independently, e.g. recomputing metrics from the stored scores and split indices with pandas/scikit-learn outside FTAD | the analyst |
+| **Scientific interpretation** | Judging what the numbers mean, how uncertain they are and how far they generalise | the analyst |
+
+A tool cannot validate its own output. FTAD makes recomputation possible by storing everything
+needed, but it does not certify its results. The credit-card showcase reports such an independent
+recomputation ([examples/credit-card-fraud/methodology.md](../examples/credit-card-fraud/methodology.md)).
+
+## What every experiment records
 
 | Item | Where |
 |---|---|
@@ -9,7 +21,9 @@ Every experiment records what is needed to repeat it:
 | Feature list, preprocessing, imbalance strategies, hyperparameters, threshold policy, HPO settings | experiment `config` (manifest) |
 | Split method, fractions, seed, partition sizes, positives, **indices** | `split.npz`, `split.indices_sha256` |
 | Package versions (Python, NumPy, pandas, scikit-learn, imbalanced-learn, XGBoost, LightGBM, CatBoost, …) | manifest, each `model.joblib` |
-| Per-run threshold, metrics, curves, sweeps, importance, CV results | `runs.result_json`, `detail.json` |
+| Validation-frozen threshold and the policy that chose it | run record, `detail.json` |
+| Per-run metrics, curves, sweeps, importance, CV results | `runs.result_json`, `detail.json` |
+| Stored scores and evaluated indices (validation, test) | `scores.npz` |
 | Fitted pipeline (preprocessing + model) and calibrator | `model.joblib` |
 | Timestamps | experiment and run records |
 

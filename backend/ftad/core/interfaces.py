@@ -2,7 +2,7 @@
 
 FTAD's core is domain-agnostic. Future work (e.g. a custom PyTorch financial network,
 walk-forward evaluation on market data) plugs in through the registries below instead of
-modifying the experiment runner. See docs/EXTENDING.md for worked examples.
+modifying the experiment runner. See docs/extending.md for worked examples.
 
 Registry / hook                         | Where                                   | Contract
 ----------------------------------------|-----------------------------------------|-----------------------------------------

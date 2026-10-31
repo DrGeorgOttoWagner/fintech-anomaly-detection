@@ -1,0 +1,11 @@
+algorithm,protocol,average_precision,roc_auc,precision,recall,f1,tp,fp,fn,n_fraud
+Dummy (majority class),stratified 70/15/15,0.0017,0.5000,,0.0000,0.0000,0,0,74,74
+Logistic Regression,stratified 70/15/15,0.7511,0.9576,0.7746,0.7432,0.7586,55,16,19,74
+Random Forest,stratified 70/15/15,0.8297,0.9363,0.9385,0.8243,0.8777,61,4,13,74
+XGBoost,stratified 70/15/15,0.8353,0.9711,0.9500,0.7703,0.8507,57,3,17,74
+LightGBM,stratified 70/15/15,0.3820,0.7849,0.6164,0.6081,0.6122,45,28,29,74
+Dummy (majority class),chronological 70/15/15,0.0012,0.5000,,0.0000,0.0000,0,0,52,52
+Logistic Regression,chronological 70/15/15,0.6427,0.9643,0.6600,0.6346,0.6471,33,17,19,52
+Random Forest,chronological 70/15/15,0.7507,0.9286,0.9487,0.7115,0.8132,37,2,15,52
+XGBoost,chronological 70/15/15,0.7533,0.9688,0.9459,0.6731,0.7865,35,2,17,52
+LightGBM,chronological 70/15/15,0.7508,0.9762,0.9268,0.7308,0.8172,38,3,14,52

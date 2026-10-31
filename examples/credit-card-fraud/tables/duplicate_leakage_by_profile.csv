@@ -1,0 +1,7 @@
+study,profile,duplicate_groups,groups_crossing_partitions,validation_rows_with_copy_in_train,validation_fraud_with_copy_in_train,test_rows_with_copy_in_train,test_fraud_with_copy_in_train,test_share_with_copy_in_train
+dupsafe,A,773,0,0,0,0,0,0.0000
+dupsafe,B,773,0,0,0,0,0,0.0000
+dupsafe,C,773,0,0,0,0,0,0.0000
+stratified,A,773,397,207,4,249,3,0.0058
+stratified,B,773,301,172,4,172,4,0.0060
+stratified,C,773,491,297,4,271,5,0.0048

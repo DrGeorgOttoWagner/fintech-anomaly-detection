@@ -1,11 +1,13 @@
 <div align="center">
 
-# FTAD · FinTech Anomaly Detection
+# FinTech Anomaly Detection (FTAD)
 
-**A local research platform for financial anomaly detection and machine learning on imbalanced data.**
+**Local research platform for reproducible fraud and anomaly detection analysis, exploratory data analysis
+and comparative machine-learning benchmarking.**
 
-Upload a dataset → map its schema → explore it rigorously → benchmark models under a leakage-safe
-protocol → inspect individual anomalies → export reproducible research evidence.
+**Author / Maintainer:** Georg-Otto Wagner · **Version:** 1.0.0 · **Licence:** MIT
+
+**Contact:** [georg-otto.wagner@outlook.com](mailto:georg-otto.wagner@outlook.com)
 
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
@@ -18,80 +20,127 @@ protocol → inspect individual anomalies → export reproducible research evide
 
 </div>
 
-![Leaderboard](docs/screenshots/09_leaderboard.png)
+![ML benchmark leaderboard (synthetic demo data)](docs/screenshots/09_leaderboard.png)
 
-## Why FTAD
+## Overview
 
-Fraud and other financial anomalies are rare. On the public credit-card fraud dataset, a model that
-never raises an alert is 99.83 % "accurate" and useless. FTAD is built around that fact:
+Fraud and other financial anomalies are rare. A model that never raises an alert can be more than
+99 % "accurate" and still catch nothing. FTAD is built for this situation: it guides an analyst from a
+raw tabular file to a documented, leakage-safe comparison of detection methods, entirely on the
+analyst's own machine.
 
-- **Nothing is assumed.** No dataset is preloaded, no column names are hard-coded, and every number
-  on screen is computed from the file you upload.
-- **Evaluation is honest.** One split per experiment, preprocessing and resampling fitted on training
-  data only, thresholds chosen on validation and frozen, a single final test estimate, PR-AUC shown
-  against its prevalence baseline, undefined metrics shown as *n/a* instead of 0.
-- **Everything is reproducible.** Dataset SHA-256, schema hash, split indices, seeds, configuration,
-  package versions and fitted pipelines are persisted and exportable.
-- **Your data stays local.** The backend binds to `127.0.0.1`, makes no outbound calls and bundles its fonts.
+FTAD was developed as a local research platform for reproducible fraud and anomaly detection analysis.
+It is research software, not a production fraud-detection service.
 
-## Features
-
-| Area | Highlights |
+| | |
 |---|---|
-| **Datasets** | Native file picker or drag & drop, upload progress, CSV/Parquet validation, SHA-256 fingerprint, duplicate detection, immutable raw copy, paged preview, dataset registry with explicit reopen |
-| **Schema mapping** | Auto-detected types, missing/unique counts, identifiers, targets, timestamps and precomputed-PCA patterns; editable roles (target, numeric, categorical, existing PCA, time, transaction ID, entity ID, ignore); explicit positive label; live validation |
-| **Exploratory analysis** | Prevalence, imbalance ratio, majority-baseline accuracy; amount distributions (linear/log, box plots, tests, deciles); temporal volume and positive rate; correlation heatmaps; KS/AUC/MI relevance; class-conditional distributions; PCA component properties; generated findings |
-| **Experiment studio** | Quick / Full / HPO modes; linked train/validation/test sliders with presets; stratified, random, chronological and group-aware splits; 20 algorithms; 5 imbalance strategies; configurable preprocessing; threshold policies; async worker with progress and cancellation |
-| **Benchmark & evaluation** | Leaderboard per evaluation protocol ranked by a validation objective; PR/ROC/calibration curves; confusion matrices; native & permutation importance; Threshold Studio; hypothetical cost simulator |
-| **Anomaly explorer** | TP/FP/TN/FN filters, scores and thresholds per record, feature values, CSV export |
-| **Score new data** | Apply persisted pipelines to new uploads with compatibility checks (missing columns, types, unseen categories, PCA provenance & drift) |
-| **Research reports** | Markdown + HTML report, CSV tables, PNG/SVG figures, manifest, analysis-coverage appendix; ZIP download or export to a configured local folder |
+| **Dataset ingestion** | CSV/Parquet upload with validation, SHA-256 fingerprint, duplicate detection and an immutable raw copy |
+| **Schema mapping** | Suggested and editable column roles: target with explicit positive label, numeric, categorical, precomputed PCA components, time, transaction ID, entity ID, ignore |
+| **Descriptive statistics & EDA** | Full-data statistics, class balance, value (amount) and time analysis, correlations, feature-separation indicators, generated findings |
+| **Class-imbalance analysis** | Prevalence, imbalance ratio, majority-baseline accuracy and why accuracy misleads |
+| **Supervised benchmarking** | 17 supervised algorithms, five imbalance strategies, configurable preprocessing |
+| **Unsupervised anomaly detection** | Isolation Forest, Local Outlier Factor and One-Class SVM under the same protocol |
+| **Threshold analysis** | Validation-frozen thresholds, Threshold Studio, confusion matrices, hypothetical cost simulator |
+| **Reproducible protocols** | Stored split indices and hashes, seeds, configuration, library versions and fitted pipelines |
+| **Research reports** | Markdown/HTML report, CSV tables, PNG/SVG figures and a JSON manifest |
 
-### Model registry
+## Key capabilities
 
-| Family | Algorithms |
-|---|---|
-| Baseline | Dummy (majority class) |
-| Linear | Logistic Regression · Ridge Classifier · SGD (log-loss) · Linear Discriminant Analysis |
-| Trees & ensembles | Decision Tree · Random Forest · Extra Trees · Gradient Boosting · HistGradientBoosting |
-| Boosting libraries | XGBoost · LightGBM · CatBoost |
-| Other supervised | k-Nearest Neighbours · Gaussian Naive Bayes · SVM (RBF) · Multi-Layer Perceptron |
-| Anomaly detection | Isolation Forest · Local Outlier Factor (novelty) · One-Class SVM |
-
-Each adapter declares its score type (*probability*, *decision score* or *anomaly score*), whether it
-needs scaling, how it supports class weighting and its resource caps. Unavailable libraries and
-inapplicable strategy combinations are reported, never silently substituted. Every one of the 20
-adapters is individually validated by the test suite (fit → score → frozen threshold → metrics →
-persisted pipeline).
+- **Nothing is assumed.** No dataset is preloaded and no column names are hard-coded; every number on
+  screen is computed from the uploaded file.
+- **Leakage-safe evaluation.** Preprocessing and resampling are fitted on training rows only, thresholds
+  are chosen on validation and frozen, and the test partition is scored once.
+- **Rare-event metrics first.** Average precision (AP) is shown next to its random-ranking baseline
+  (the prevalence); undefined metrics are shown as *n/a*, never as 0.
+- **Reproducible by design.** Dataset fingerprint, schema hash, split indices, seeds, configuration and
+  package versions are persisted with every experiment.
+- **Local only.** The backend binds to `127.0.0.1`, makes no outbound network calls and bundles its fonts.
 
 ## Screenshots
+
+All screenshots below use the clearly labelled **synthetic demo dataset** in [`demo/synthetic/`](demo/synthetic/).
 
 | | |
 |---|---|
 | ![Empty state](docs/screenshots/01_empty_state.png) | ![Schema mapping](docs/screenshots/02_schema_mapping.png) |
-| ![Class imbalance](docs/screenshots/04_class_imbalance.png) | ![Amount](docs/screenshots/05_amount.png) |
-| ![Time](docs/screenshots/06_time.png) | ![Experiment studio](docs/screenshots/08_experiment_studio.png) |
-| ![Model evaluation](docs/screenshots/10_model_evaluation.png) | ![Threshold studio](docs/screenshots/11_threshold_studio.png) |
+| ![Class imbalance](docs/screenshots/04_class_imbalance.png) | ![Amount analysis](docs/screenshots/05_amount.png) |
+| ![Descriptive statistics](docs/screenshots/03_descriptive.png) | ![Model evaluation](docs/screenshots/10_model_evaluation.png) |
+| ![Threshold studio](docs/screenshots/11_threshold_studio.png) | ![Research reports](docs/screenshots/13_reports.png) |
 
-Screenshots show a synthetic demo dataset.
+## Quick start (macOS)
 
-## Example: Quick Benchmark on the public credit-card fraud dataset
+**Supported platform:** macOS only. Tested on macOS / Apple Silicon (Apple M3 Pro). Requirements:
+[Homebrew](https://brew.sh), Python 3.12+, Node.js 20+ and the OpenMP runtime used by XGBoost and LightGBM.
 
-One run of the built-in Quick Benchmark on `creditcard.csv` (284,807 transactions, 492 frauds,
-stratified 70/15/15 split, seed 42, no resampling, threshold maximising F1 on validation). Test
-partition: 42,722 records with 74 frauds. Produced by FTAD itself; reproduce it with the steps below.
+```bash
+brew install python@3.12 node libomp
+git clone https://github.com/DrGeorgOttoWagner/fintech-anomaly-detection.git
+cd fintech-anomaly-detection
+./scripts/setup.sh      # Python virtualenv, backend dependencies, frontend build, .env
+./scripts/start.sh      # → http://127.0.0.1:8790
+```
 
-| Model | Precision | Recall | F1 | ROC-AUC | PR-AUC |
-|---|---|---|---|---|---|
-| Dummy (majority class) | n/a | 0.000 | 0.000 | 0.500 | 0.002 |
-| Logistic Regression | 0.775 | 0.743 | 0.759 | 0.958 | 0.751 |
-| Random Forest | 0.951 | 0.784 | 0.859 | 0.937 | 0.834 |
-| XGBoost | 0.950 | 0.770 | 0.851 | 0.970 | 0.834 |
-| Isolation Forest (unsupervised) | 0.367 | 0.243 | 0.293 | 0.942 | 0.223 |
+To try FTAD without downloading anything, upload
+[`demo/synthetic/synthetic_transactions.csv`](demo/synthetic/). Detailed instructions:
+[docs/getting-started.md](docs/getting-started.md).
 
-Note the Isolation Forest row: a high ROC-AUC can coexist with poor alert quality under extreme
-imbalance — which is why FTAD ranks by PR-AUC on validation by default. With only 74 test frauds,
-differences of a few cases change these numbers noticeably.
+## Typical workflow
+
+1. Start FTAD (`./scripts/start.sh`) and open `http://127.0.0.1:8790`.
+2. Upload a dataset (CSV or Parquet).
+3. Map the schema: target and positive label, features, time, value and identifier columns.
+4. Inspect data quality: missing values, duplicates, class distribution.
+5. Run the exploratory analysis: value, time, correlations and feature separation.
+6. Configure the split: train/validation/test fractions, method and seed.
+7. Run a benchmark (Quick, Full or hyperparameter optimisation).
+8. Compare AP, precision, recall, F1 and ROC-AUC in the leaderboard.
+9. Inspect thresholds and confusion matrices.
+10. Export a research report.
+
+See the [user guide](docs/user-guide.md), the generic [research workflow](docs/workflow.md) and the
+[metrics guide](docs/metrics.md).
+
+## Algorithms
+
+FTAD v1.0.0 registers 20 algorithms (verified against `backend/ftad/core/models/registry.py`).
+
+| Supervised (17) | | Unsupervised anomaly detection (3) |
+|---|---|---|
+| Dummy (majority class) | Gradient Boosting | Isolation Forest |
+| Logistic Regression | HistGradientBoosting | Local Outlier Factor (novelty mode) |
+| Ridge Classifier | XGBoost | One-Class SVM |
+| SGD Classifier (log-loss) | LightGBM | |
+| Linear Discriminant Analysis | CatBoost | |
+| Decision Tree | k-Nearest Neighbours | |
+| Random Forest | Gaussian Naive Bayes | |
+| Extra Trees | SVM (RBF kernel) | |
+| | Multi-Layer Perceptron | |
+
+Each adapter declares its score type (probability, decision score or anomaly score), whether it needs
+scaling, its class-weighting support and its resource caps. Imbalance strategies: none, class weighting,
+random undersampling, random oversampling and SMOTE (training data only).
+
+## Reproducible fraud-detection showcase
+
+FTAD was applied to the public **Credit Card Fraud Detection** dataset (Machine Learning Group – ULB,
+[Kaggle](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)). The dataset is **not** distributed
+with this repository.
+
+- 284,807 transactions, 492 frauds, prevalence 0.1727 %
+- 20 algorithms, 3 train/validation/test allocation profiles
+- duplicate-leakage and chronological robustness checks
+
+| Profile | Validation-selected model | Test AP |
+|---|---|---:|
+| 70/15/15 | CatBoost | 0.8415 |
+| 80/10/10 | Extra Trees | 0.8901 |
+| 60/20/20 | XGBoost | 0.8773 |
+
+No universal winning algorithm was observed. CatBoost, XGBoost, Extra Trees and Random Forest
+consistently formed the leading supervised group. Each profile has its own test set, so the higher
+AP of the 80/10/10 profile does not make that allocation universally better.
+
+→ **[examples/credit-card-fraud/](examples/credit-card-fraud/README.md)**: workflow, results, figures and tables.
 
 ## Architecture
 
@@ -106,119 +155,51 @@ flowchart LR
 ```
 
 ```
-FTAD/
-├── backend/ftad/
-│   ├── core/            # domain-agnostic research engine
-│   │   ├── data/  schema/  eda/  splitting/  preprocessing/  imbalance/
-│   │   ├── models/  evaluation/  experiments/  inference/  reporting/
-│   │   └── interfaces.py   # extension points
-│   ├── modules/fraud/   # fraud-domain hints, cost model, evidence matrix
-│   └── api/             # FastAPI routers
-├── frontend/            # React + TypeScript + Vite + Tailwind + Recharts
-├── tests/backend/       # pytest unit & API integration tests
-├── frontend/e2e/        # Playwright browser acceptance test
-├── docs/                # architecture, user guide, reproducibility, extending
+fintech-anomaly-detection/
+├── backend/ftad/        # FastAPI app and the domain-agnostic research engine
+├── frontend/            # React + TypeScript + Vite UI, Playwright acceptance test
+├── tests/backend/       # pytest unit and API integration tests
+├── docs/                # getting started, user guide, workflow, metrics, architecture, reproducibility
+├── examples/            # credit-card fraud research showcase (aggregate results only)
+├── demo/synthetic/      # small synthetic demo dataset and its generator
 └── scripts/             # setup / start / dev / test
 ```
 
-Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
-
-## Installation (macOS)
-
-**Supported platform:** macOS only. Tested on macOS / Apple Silicon (Apple M3 Pro, macOS 27).
-Other operating systems are not supported or tested in v1.0.0.
-
-Requirements: [Homebrew](https://brew.sh), Python 3.12+, Node.js 20+ and the OpenMP runtime used by
-XGBoost and LightGBM:
-
-```bash
-brew install python@3.12 node libomp
-```
-
-Then:
-
-```bash
-git clone https://github.com/<you>/fintech-anomaly-detection.git
-cd fintech-anomaly-detection
-./scripts/setup.sh
-```
-
-## Running
-
-```bash
-./scripts/start.sh          # → http://127.0.0.1:8790
-```
-
-Development mode with hot reload (API :8790, UI :5173): `./scripts/dev.sh`.
-Configuration lives in `.env` (see [.env.example](.env.example)): port, data directory, upload limit
-and the optional `FTAD_EXPORT_DIR` for one-click report export.
-
-## Using FTAD
-
-1. **Upload** a CSV or Parquet file with *Browse Files* (e.g. `creditcard.csv` from
-   [Kaggle: mlg-ulb/creditcardfraud](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) — download it yourself; FTAD never downloads data).
-2. **Map the schema**: confirm the target and its positive label, features, time and identifier columns.
-3. **Explore**: descriptive statistics, class imbalance, amount and time analysis, features, findings.
-4. **Configure an experiment**: split sliders, mode, algorithms, imbalance strategies, preprocessing, threshold policy.
-5. **Run a benchmark** and follow its progress; compare runs in the **ML Benchmark** leaderboard.
-6. **Interpret**: confusion matrices, curves, Threshold Studio, importance, cost scenarios, record-level explorer.
-7. **Export** a research report bundle.
-
-See the [user guide](docs/USER_GUIDE.md) for every screen and for guidance on interpreting results.
-
-## Reproducing results
-
-Experiments store dataset fingerprint, schema hash, split indices, seeds, configuration, package
-versions and fitted pipelines. `Reproduce` re-runs an experiment identically; manifests are exported
-with every report. See [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
-
-## Release
-
-Current release: **FinTech Anomaly Detection v1.0.0** — see [CHANGELOG.md](CHANGELOG.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
+Details: [docs/architecture.md](docs/architecture.md) · [docs/reproducibility.md](docs/reproducibility.md) ·
+[docs/extending.md](docs/extending.md).
 
 ## Testing
 
 ```bash
-./scripts/test.sh                       # pytest (backend) + type-check + lint (frontend)
-cd frontend && npx playwright test      # browser acceptance workflow on a synthetic fixture
-FTAD_E2E_DATASET=/path/to/creditcard.csv npx playwright test   # same workflow on real data
+./scripts/test.sh                        # backend pytest + frontend type-check + lint
+cd frontend && npx playwright test       # browser acceptance workflow on a synthetic fixture
 ```
 
 Test fixtures are synthetic and labelled as such; they are never presented as research results.
-The browser suite runs against its own temporary data directory and port.
 
-## Extending
+## Limitations (v1.0.0)
 
-New models (including PyTorch networks wrapped as scikit-learn estimators), split strategies
-(walk-forward, purged temporal CV), schema hints and report sections plug in through registries —
-see [docs/EXTENDING.md](docs/EXTENDING.md).
+- Binary targets only (multi-class targets are binarised *positive vs. rest*); no regression or forecasting.
+- Files are loaded fully into memory.
+- Kernel SVM, k-NN, LOF, One-Class SVM and classic Gradient Boosting train on capped stratified subsamples by default.
+- One train/validation/test split per experiment; no bootstrap confidence intervals or repeated-split evaluation yet.
+- A model fit cannot be interrupted midway; cancelling terminates the worker process.
+- macOS only.
 
-## Known limitations
+## Technology
 
-- Binary targets only (multi-class targets are binarised *positive vs. rest*); no regression/forecasting yet.
-- Very large files are loaded fully into memory (the 144 MB Kaggle file uses ≈70 MB in memory).
-- Kernel SVM, kNN, LOF, One-Class SVM and classic Gradient Boosting train on capped stratified subsamples by default.
-- Training cannot be interrupted inside a single model fit; cancellation terminates the worker process.
-- Test metrics on datasets with few positives are uncertain; FTAD does not yet report bootstrap confidence intervals.
-- The optional PyTorch autoencoder is not included in v1.0.0 (extension point documented).
-
-## Roadmap
-
-- Bootstrap confidence intervals and repeated-split evaluation
-- Walk-forward / expanding-window / purged temporal cross-validation
-- PyTorch autoencoder and custom neural-network adapters
-- Regression and forecasting tasks; multivariate time-series windows
-- Out-of-core processing for datasets larger than memory
-- SHAP-style local explanations in the Anomaly Explorer
+Python 3.12 · FastAPI · pandas · NumPy · SciPy · scikit-learn · imbalanced-learn · XGBoost · LightGBM ·
+CatBoost · matplotlib · SQLite · React 19 · TypeScript · Vite · Tailwind CSS · Recharts · pytest · Playwright.
 
 ## Responsible use
 
-FTAD v1.0.0 is a stable local research software release — not a certified or production fraud-detection service, and no model it trains is claimed to be universally valid. FTAD is a research tool. Its outputs are statistical associations and model scores, not decisions.
-An anomaly is not necessarily fraud; large amounts are not by themselves evidence of fraud; model
-probabilities are not calibrated unless explicitly calibrated. Any operational use requires
-independent validation, monitoring and human oversight.
+FTAD's outputs are statistical associations and model scores, not decisions. An anomaly is not
+necessarily fraud, a large amount is not by itself evidence of fraud, and model probabilities are not
+calibrated unless calibration is enabled. Any operational use requires independent validation,
+monitoring and human oversight.
 
-## License
+## Licence
 
-[MIT](LICENSE). The Credit Card Fraud Detection dataset is published by the Machine Learning Group
-of ULB under the Open Database License (ODbL) and is not redistributed here.
+[MIT](LICENSE) © 2026 Georg-Otto Wagner. Third-party libraries keep their own licences. The Credit Card
+Fraud Detection dataset is published by the Machine Learning Group – ULB under the Open Database
+License (ODbL) and is not redistributed here.

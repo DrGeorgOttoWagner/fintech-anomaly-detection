@@ -10,6 +10,9 @@ predictions/
 *.pq
 *.pdf
 !docs/**/*.pdf
+# aggregate showcase tables and the small synthetic demo dataset are intentional exceptions
+!examples/**/*.csv
+!demo/synthetic/*.csv
 Dataset/
 Doc/
 
