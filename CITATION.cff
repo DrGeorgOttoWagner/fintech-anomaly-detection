@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use FTAD in research, analysis or demonstrations, please cite this software."
+type: software
+title: "FinTech Anomaly Detection (FTAD)"
+version: "1.0.0"
+date-released: "2026-10-31"
+license: MIT
+repository-code: "https://github.com/DrGeorgOttoWagner/fintech-anomaly-detection"
+authors:
+  - given-names: "Georg-Otto"
+    family-names: "Wagner"
+    email: "georg-otto.wagner@outlook.com"
+abstract: >-
+  FTAD is a local research platform for reproducible fraud and anomaly detection analysis,
+  exploratory data analysis and comparative machine-learning benchmarking on imbalanced
+  tabular data, with leakage-safe train/validation/test protocols, validation-frozen
+  thresholds and reproducibility metadata.
+keywords:
+  - fintech
+  - fraud detection
+  - anomaly detection
+  - machine learning
+  - reproducible research

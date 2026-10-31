@@ -4,8 +4,9 @@ A reproducible research example demonstrating FTAD on a highly imbalanced, real-
 
 > **The dataset is not distributed with this repository.** Download `creditcard.csv` directly from
 > [Kaggle — Credit Card Fraud Detection (Machine Learning Group – ULB)](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
-> and load it into FTAD locally. According to its Kaggle page, the dataset is published under the Open
-> Database License (ODbL).
+> and load it into FTAD locally. Kaggle's dataset metadata lists the licence as *"Database: Open Database,
+> Contents: Database Contents"*: Open Database License for the database, Database Contents License for
+> its contents ([ODbL v1.0](https://opendatacommons.org/licenses/odbl/1-0/) · [DbCL v1.0](https://opendatacommons.org/licenses/dbcl/1-0/)).
 
 ## At a glance
 
@@ -20,7 +21,7 @@ A reproducible research example demonstrating FTAD on a highly imbalanced, real-
 
 ## Key findings
 
-1. **Accuracy is useless here.** Always predicting "genuine" scores 99.8273 % accuracy and catches no fraud.
+1. **Accuracy alone is misleading for this extremely imbalanced dataset.** Always predicting "genuine" scores 99.8273 % accuracy and catches no fraud.
 2. **`Amount` alone is weak evidence.** Its relation to fraud is non-monotonic: the lowest and highest
    amount deciles have higher fraud rates than the middle range.
 3. **The anonymised components carry the signal.** V14, V10, V12, V4 and V11 separate the classes most strongly.

@@ -5,19 +5,6 @@ The project follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-Documentation and presentation only; no change to models, metrics or methodology.
-
-### Added
-- Documentation set: getting started, user guide, generic research workflow, metrics guide, architecture
-  and reproducibility (`docs/`).
-- Credit-card fraud research showcase with workflow, methodology, results, aggregate tables and figures
-  (`examples/credit-card-fraud/`). The dataset itself is not included.
-- Synthetic demo dataset and generator (`demo/synthetic/`); all UI screenshots regenerated on it.
-
-### Changed
-- The fraud-domain report appendix is now an "Analysis coverage" table.
-- Documentation file names are lower-case; author and maintainer metadata were added.
-
 ## [1.0.0] — 2026-10-31
 
 First stable local research release. Feature scope frozen.
@@ -51,4 +38,13 @@ Node.js 25). Other operating systems are not supported in this release.
 - New reports: the binary target is presented in the class-distribution section instead of the
   continuous-variable statistics table; print-friendly HTML (figures kept with captions, no
   orphaned headings, A4 page setup). Previously generated reports are unchanged.
+- The fraud-domain report appendix is presented as an "Analysis coverage" table.
+
+### Documentation and showcase
+- Documentation set: getting started, user guide, generic research workflow, metrics guide,
+  architecture, reproducibility and extending (`docs/`, lower-case file names); release notes.
+- Public Credit Card Fraud Detection research showcase with workflow, methodology, results,
+  aggregate tables and figures (`examples/credit-card-fraud/`). The dataset is not redistributed.
+- Synthetic demo dataset and seeded generator (`demo/synthetic/`); all UI screenshots use it.
+- Author/maintainer metadata (README, LICENSE, `pyproject.toml`, `package.json`) and `CITATION.cff`.
 

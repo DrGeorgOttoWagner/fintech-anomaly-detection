@@ -41,7 +41,7 @@ These applied to every model run:
 
 | Study | Split | Purpose |
 |---|---|---|
-| **Confirmatory benchmark** | stratified 70/15/15, seed 42; Dummy, Logistic Regression, Random Forest, XGBoost, LightGBM | Pre-registered selection by validation AP (XGBoost was selected) |
+| **Confirmatory benchmark** | stratified 70/15/15, seed 42; Dummy, Logistic Regression, Random Forest, XGBoost, LightGBM | Original selection rule, fixed in advance: highest validation AP (XGBoost was selected) |
 | **20-algorithm comparison** | same partitions as the confirmatory benchmark | Exploratory extension to every registered algorithm |
 | **Three allocation profiles** | stratified, seed 42: **A** 70/15/15, **B** 80/10/10, **C** 60/20/20 | Stability of rankings and selection under different allocations |
 | **Duplicate sensitivity** | (a) re-scoring each stratified test set without records that have an exact copy in training; (b) group-aware splits keeping identical rows together, profiles A–C | Effect of exact-duplicate leakage |

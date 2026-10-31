@@ -9,6 +9,8 @@ and comparative machine-learning benchmarking.**
 
 **Contact:** [georg-otto.wagner@outlook.com](mailto:georg-otto.wagner@outlook.com)
 
+[Getting Started](docs/getting-started.md) · [User Guide](docs/user-guide.md) · [Research Workflow](docs/workflow.md) · [Metrics](docs/metrics.md) · [Architecture](docs/architecture.md) · [Reproducibility](docs/reproducibility.md) · [Fraud Study](examples/credit-card-fraud/README.md)
+
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
@@ -200,6 +202,9 @@ monitoring and human oversight.
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Georg-Otto Wagner. Third-party libraries keep their own licences. The Credit Card
-Fraud Detection dataset is published by the Machine Learning Group – ULB under the Open Database
-License (ODbL) and is not redistributed here.
+[MIT](LICENSE) © 2026 Georg-Otto Wagner. Third-party libraries keep their own licences.
+
+The Credit Card Fraud Detection dataset (Machine Learning Group – ULB) is **not redistributed** here.
+Kaggle's dataset metadata lists its licence as *"Database: Open Database, Contents: Database Contents"*:
+the Open Database License for the database and the Database Contents License for its contents
+([ODbL v1.0](https://opendatacommons.org/licenses/odbl/1-0/) · [DbCL v1.0](https://opendatacommons.org/licenses/dbcl/1-0/)). Obtain it directly from Kaggle, subject to Kaggle's published dataset terms.

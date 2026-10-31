@@ -121,7 +121,7 @@ Test set: 42,722 transactions with 74 frauds. Thresholds are frozen on validatio
   - LightGBM's test AP varied between 0.29 and 0.87 across profiles;
   - classic Gradient Boosting's varied between 0.16 and 0.61.
 
-  These are properties of the unregularised default settings, not of the algorithms in general.
+  These are properties of the tested default configurations, not of the algorithms in general.
 
 ![Precision vs recall (profile A)](figures/06_precision_vs_recall_profile_A.png)
 
