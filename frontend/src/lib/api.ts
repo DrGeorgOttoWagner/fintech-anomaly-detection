@@ -133,11 +133,16 @@ export interface Experiment {
   n_completed?: number
 }
 
+/** Turn FastAPI/pydantic validation details into one readable sentence. */
+function describeValidation(items: Any[]): string {
+  return items.map((d) => `${(d.loc ?? []).filter((l: Any) => l !== 'body').join(' › ') || 'input'}: ${String(d.msg ?? '').replace(/^Value error, /, '')}`).join('; ')
+}
+
 export class ApiError extends Error {
   status: number
   detail: Any
   constructor(status: number, detail: Any) {
-    super(typeof detail === 'string' ? detail : detail?.message ?? `Request failed (${status})`)
+    super(typeof detail === 'string' ? detail : Array.isArray(detail) ? describeValidation(detail) : detail?.message ?? `Request failed (${status})`)
     this.status = status
     this.detail = detail
   }

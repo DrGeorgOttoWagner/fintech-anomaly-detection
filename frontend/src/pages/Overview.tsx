@@ -6,6 +6,7 @@ import type { Any, Envelope, Experiment } from '../lib/api'
 import { fmtDate, fmtInt, fmtMetric, fmtPct, IMBALANCE_LABEL } from '../lib/format'
 import { useApi } from '../lib/hooks'
 import { useSession } from '../lib/session'
+import { APP_VERSION } from '../version'
 
 const CAPS = [
   { icon: ListTree, title: 'Universal schema mapping', text: 'Any column names, any number of PCA or numeric features, categorical data, timestamps and entity IDs.' },
@@ -26,7 +27,7 @@ function DatasetSummary() {
   const best = lb.data?.groups?.[0]?.runs?.find((x: Any) => x.run_id === lb.data.groups[0].best_run_id)
   return (
     <div className="space-y-6">
-      <Card title={dataset!.original_filename} subtitle={<span className="num">SHA-256 {dataset!.sha256.slice(0, 24)}… · uploaded {fmtDate(dataset!.created_at)}</span>}
+      <Card title={dataset!.original_filename} subtitle={<span>{fmtInt(dataset!.n_rows)} rows × {dataset!.n_cols} columns · uploaded {fmtDate(dataset!.created_at)}</span>}
         actions={!schema ? <Link to="/schema"><Button variant="primary" size="sm">Map schema <ArrowRight className="size-3.5" /></Button></Link> : <Link to="/explore"><Button size="sm">Explore <ArrowRight className="size-3.5" /></Button></Link>}>
         {!schema ? (
           <p className="text-sm text-muted">{fmtInt(dataset!.n_rows)} rows × {dataset!.n_cols} columns uploaded. Confirm the schema mapping to compute statistics — nothing is computed from assumptions.</p>
@@ -98,7 +99,7 @@ export default function Overview() {
           </div>
         ))}
       </div>
-      <p className="mt-6 text-center text-[11px] text-dim">FTAD v1.0 · Open-source research software. Results depend on the data you upload and are never fabricated or precomputed.</p>
+      <p className="mt-6 text-center text-[11px] text-dim">FinTech Anomaly Detection v{APP_VERSION} · Open-source research software. Results depend on the data you upload and are never fabricated or precomputed.</p>
     </div>
   )
 }

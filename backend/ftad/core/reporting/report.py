@@ -111,6 +111,7 @@ def generate_report(
             [pos, cfg.positive_label, cb["n_positive"], _pct(cb["prevalence"])],
         ], caption="Class counts computed on all records")
         doc.table(["Measure", "Value"], [
+            ["Target column", f"{cfg.target} (binary; positive label {cfg.positive_label} = '{pos}')"],
             ["Positive-class prevalence", _pct(cb["prevalence"], 4)], ["Minority : majority ratio", f"1 : {cb['majority_to_minority']:,.1f}"],
             ["One positive per", f"{cb['one_in_n']:,.1f} records"], ["Majority-class baseline accuracy", _pct(cb["majority_baseline_accuracy"], 4)],
         ])
@@ -122,10 +123,11 @@ def generate_report(
 
     # 4 Descriptive statistics -----------------------------------------------------------
     doc.h(1, "4. Descriptive statistics")
-    num_cols = [c for c in ov["columns"] if "mean" in c]
+    # The binary target is presented in the class-distribution section, not as a continuous variable.
+    num_cols = [c for c in ov["columns"] if "mean" in c and c["name"] != cfg.target]
     _write_csv(tables / "descriptive_statistics.csv", ["column", "role", *STAT_KEYS, "missing", "n_unique"],
                [[c["name"], c["role"], *[c.get(k) for k in STAT_KEYS], c["missing"], c["n_unique"]] for c in num_cols])
-    key_cols = [c for c in num_cols if c["name"] in {cfg.time_column, cfg.amount_column, cfg.target}]
+    key_cols = [c for c in num_cols if c["name"] in {cfg.time_column, cfg.amount_column}]
     doc.table(["Column", "Mean", "Std", "Min", "Q1", "Median", "Q3", "Max", "Skewness"],
               [[c["name"], c["mean"], c["std"], c["min"], c["q1"], c["median"], c["q3"], c["max"], c.get("skewness")] for c in key_cols],
               caption="Key variables (all records). Full table: tables/descriptive_statistics.csv")

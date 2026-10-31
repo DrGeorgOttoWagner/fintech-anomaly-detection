@@ -96,7 +96,7 @@ function DatasetChip() {
       <span className="min-w-0">
         <span className="block max-w-[220px] truncate text-xs font-medium">{dataset.original_filename}</span>
         <span className="num block text-[10.5px] text-dim">
-          {fmtInt(dataset.n_rows)} × {dataset.n_cols} · {dataset.sha256.slice(0, 8)} · {schema ? `schema ${schema.hash.slice(0, 6)}` : 'schema pending'}
+          {fmtInt(dataset.n_rows)} rows × {dataset.n_cols} cols · {schema ? 'schema confirmed' : 'schema pending'}
         </span>
       </span>
     </NavLink>

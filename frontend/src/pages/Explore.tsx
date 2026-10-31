@@ -24,7 +24,8 @@ function Descriptive() {
   const { result: ov, error } = useEda('overview')
   if (!ov) return <Loading error={error} />
   const cb = ov.class_balance
-  const numeric = ov.columns.filter((c: Any) => c.mean !== undefined)
+  // The binary target is summarised under "Class imbalance", not as a continuous variable.
+  const numeric = ov.columns.filter((c: Any) => c.mean !== undefined && c.role !== 'target')
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 xl:grid-cols-7" data-testid="overview-stats">
@@ -72,7 +73,6 @@ function Descriptive() {
           {Object.entries(ov.role_counts).map(([r, n]) => <Badge key={r}>{ROLE_LABEL[r]} · {String(n)}</Badge>)}
           <Badge tone="dim">numeric dtype · {ov.kind_counts.numeric}</Badge>
           <Badge tone="dim">non-numeric dtype · {ov.kind_counts.non_numeric}</Badge>
-          <Badge tone="dim">{fmtNum(ov.memory_mb, 1)} MB in memory</Badge>
         </div>
       </Card>
     </div>

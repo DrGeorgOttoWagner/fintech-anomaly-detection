@@ -110,14 +110,14 @@ def build_router(state: AppState) -> APIRouter:
         if not ed:
             raise HTTPException(409, "No export folder configured. Set FTAD_EXPORT_DIR in FTAD/.env and restart FTAD.")
         if not ed.is_dir():
-            raise HTTPException(409, f"Export folder {ed} does not exist.")
+            raise HTTPException(409, "The configured export folder does not exist. Create it or update FTAD_EXPORT_DIR.")
         meta = json.loads((d / "report_meta.json").read_text())
         name = f"FTAD_{re.sub(r'[^A-Za-z0-9_-]', '_', meta['dataset_name'])[:40]}_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{report_id[-4:]}"
         try:
             dest = export_copy(d, ed / "ftad_exports", name) if (ed / "ftad_exports").is_dir() or _mk(ed / "ftad_exports") else None
         except FileExistsError as exc:
             raise HTTPException(409, str(exc))
-        return {"exported_to": str(dest), "files": len(list_files(dest))}
+        return {"exported_to": str(dest), "folder": dest.name, "files": len(list_files(dest))}
 
     return r
 

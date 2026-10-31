@@ -181,6 +181,11 @@ def test_report_generation_and_export(client, settings):
     md = client.get(f"/api/reports/{rep['id']}/files/report.md").text
     for section in ("1. Dataset description", "6. Class imbalance", "10. Comparative results", "12. Limitations", "Analysis coverage"):
         assert section in md
+    # the binary target belongs to the class-distribution section, not the continuous statistics
+    stats_csv = client.get(f"/api/reports/{rep['id']}/files/tables/descriptive_statistics.csv").text
+    assert "\nClass," not in stats_csv and "Target column | Class (binary" in md
+    html = client.get(f"/api/reports/{rep['id']}/files/report.html").text
+    assert "break-inside:avoid" in html and "@media print" in html
     assert client.get(f"/api/reports/{rep['id']}/files/../../ftad.sqlite3").status_code in (400, 404)
     assert client.get(f"/api/reports/{rep['id']}/files/..%2F..%2Fftad.sqlite3").status_code == 404
     assert client.get(f"/api/reports/{rep['id']}/bundle.zip").status_code == 200

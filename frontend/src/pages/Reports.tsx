@@ -50,14 +50,14 @@ export default function Reports() {
           </Card>
           <Card title="Export folder" subtitle="One-click export copies a bundle to a local folder you configure — never anywhere else.">
             {config.data?.export_dir ? (
-              <div className="text-xs text-muted">Configured: <code className="break-all text-text">{config.data.export_dir}/ftad_exports</code>{!config.data.export_dir_exists && <div className="mt-1 text-warn">The folder does not exist.</div>}</div>
+              <div className="text-xs text-muted">Export folder configured — bundles are copied into its <code className="text-text">ftad_exports</code> subfolder.{!config.data.export_dir_exists && <div className="mt-1 text-warn">The configured folder does not exist.</div>}</div>
             ) : <div className="text-xs text-muted">Not configured. {config.data?.how_to_configure} Until then, use “Download bundle”.</div>}
           </Card>
           <Card title="Previous reports" pad={false}>
             <div className="divide-y divide-line">
               {!reports.data ? <div className="p-4"><Spinner /></div> : reports.data.length === 0 ? <p className="p-4 text-sm text-dim">None yet.</p> : reports.data.map((r) => (
                 <button key={r.id} onClick={() => open(r.id)} className="block w-full px-4 py-2.5 text-left hover:bg-panel-2">
-                  <div className="text-sm">{r.experiment_id ? 'EDA + experiment' : 'EDA only'} <span className="num text-xs text-dim">· {r.id}</span></div>
+                  <div className="text-sm">{r.experiment_id ? 'EDA + experiment' : 'EDA only'}</div>
                   <div className="text-[11px] text-dim">{fmtDate(r.created_at)}</div>
                 </button>
               ))}
@@ -67,7 +67,7 @@ export default function Reports() {
         <div className="space-y-6">
           {current ? (
             <>
-              <Card title={current.title} subtitle={`${current.id} · ${fmtDate(current.created_at)}`}
+              <Card title={current.title} subtitle={`Generated ${fmtDate(current.created_at)}`}
                 actions={
                   <>
                     <a href={`/api/reports/${current.id}/files/report.html`} target="_blank" rel="noreferrer"><Button size="sm"><ExternalLink className="size-3.5" />Open HTML</Button></a>
@@ -75,7 +75,7 @@ export default function Reports() {
                     <Button size="sm" variant="primary" onClick={exportIt} loading={exporting} disabled={!config.data?.export_dir_exists} data-testid="export-report"><FolderOutput className="size-3.5" />Export to folder</Button>
                   </>
                 }>
-                {exported && <div className="mb-4"><Callout tone="ok" title="Exported">{exported.files} files copied to <code className="break-all">{exported.exported_to}</code></Callout></div>}
+                {exported && <div className="mb-4"><Callout tone="ok" title="Exported">{exported.files} files copied to <code className="break-all">ftad_exports/{exported.folder}</code> in the export folder.</Callout></div>}
                 <iframe title="Report preview" src={`/api/reports/${current.id}/files/report.html`} className="h-[720px] w-full rounded-lg border border-line bg-white" />
               </Card>
               <Card title="Bundle contents" pad={false}>

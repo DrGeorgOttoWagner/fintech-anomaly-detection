@@ -147,7 +147,7 @@ export default function Evaluation() {
       ) : (
         <>
           <div className="mb-5 flex flex-wrap gap-3">
-            <Select value={expId ?? ''} onChange={(v) => setParams({ experiment: v })} options={completedExps.map((e) => ({ value: e.id, label: `${e.name} (${e.id})` }))} ariaLabel="Experiment" className="max-w-[420px]" />
+            <Select value={expId ?? ''} onChange={(v) => setParams({ experiment: v })} options={completedExps.map((e) => ({ value: e.id, label: e.name }))} ariaLabel="Experiment" className="max-w-[420px]" />
             <Select value={runId ?? ''} onChange={(v) => setParams({ experiment: expId ?? '', run: v })} options={runs.map((x) => ({ value: x.id, label: `${x.algorithm_name} · ${IMBALANCE_LABEL[x.imbalance]}` }))} ariaLabel="Run" />
           </div>
           {run.error && <ErrorBox error={run.error} />}

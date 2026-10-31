@@ -14,6 +14,7 @@ const KEYS: (keyof Parts)[] = ['train', 'validation', 'test']
 const PART_COLOR = { train: '#2dd4bf', validation: '#38bdf8', test: '#f5b84b' }
 const PRESETS: Parts[] = [{ train: 80, validation: 10, test: 10 }, { train: 70, validation: 15, test: 15 }, { train: 60, validation: 20, test: 20 }]
 const MIN_PART = 5
+const MODE_LABEL: Record<string, string> = { quick: 'Quick benchmark', full: 'Full benchmark', hpo: 'Hyperparameter optimisation' }
 
 /** Change one partition and redistribute the remainder proportionally so the total stays 100%. */
 export function rebalance(p: Parts, key: keyof Parts, raw: number): Parts {
@@ -134,7 +135,7 @@ function Progress({ expId, onDone }: { expId: string; onDone: () => void }) {
     s === 'completed' ? <CheckCircle2 className="size-4 text-ok" /> : s === 'running' ? <Loader2 className="size-4 animate-spin text-accent" /> : s === 'failed' ? <XCircle className="size-4 text-bad" /> : s === 'skipped' ? <CircleSlash className="size-4 text-dim" /> : <Clock className="size-4 text-dim" />
   return (
     <Card title={<span className="flex items-center gap-2">{exp.name} <Badge tone={exp.status === 'completed' ? 'ok' : exp.status.includes('fail') || exp.status === 'cancelled' ? 'bad' : 'accent'}>{exp.status}</Badge></span>}
-      subtitle={<span className="num">{exp.id} · {exp.mode} · {exp.progress?.stage ?? ''}{exp.progress?.current_algorithm ? ` · ${exp.progress.current_algorithm}` : ''} · elapsed {fmtSeconds(exp.progress?.elapsed_seconds)}</span>}
+      subtitle={<span>{MODE_LABEL[exp.mode] ?? exp.mode} · {exp.progress?.stage ?? ''}{exp.progress?.current_algorithm ? ` · ${exp.progress.current_algorithm}` : ''} · elapsed {fmtSeconds(exp.progress?.elapsed_seconds)}</span>}
       actions={active ? <Button variant="danger" size="sm" loading={cancelling} onClick={async () => { setCancelling(true); try { await api.post(`/api/experiments/${expId}/cancel`) } finally { setCancelling(false); reload() } }}><Square className="size-3.5" />Cancel</Button>
         : <Link to={`/benchmark?experiment=${exp.id}`}><Button variant="primary" size="sm">Open leaderboard</Button></Link>}
       >
@@ -327,11 +328,14 @@ export default function Studio() {
               <Toggle checked={opts.resource_profile === 'extended'} onChange={(v) => setOpts({ ...opts, resource_profile: v ? 'extended' : 'safe' })} label="Extended resource caps" hint="Raises per-model training-row caps 4×." />
               <Toggle checked={opts.anomaly_training === 'normal_only'} onChange={(v) => setOpts({ ...opts, anomaly_training: v ? 'normal_only' : 'unsupervised' })} label="Fit anomaly detectors on negatives only" hint="Semi-supervised novelty detection instead of fully unsupervised." />
             </div>
-            <div className="mt-4">
+            <details className="mt-4 group" open={overrides.trim() !== '{}' && overrides.trim() !== ''}>
+              <summary className="cursor-pointer select-none text-xs font-medium text-muted hover:text-text">Advanced: hyperparameter overrides</summary>
+              <div className="mt-3">
               <Field label="Hyperparameter overrides (JSON per algorithm key)" hint={<>e.g. {'{"rf": {"n_estimators": 400}, "xgb": {"max_depth": 4}}'}{overridesParsed === null && <span className="text-bad"> — invalid JSON</span>}</>}>
                 <textarea value={overrides} onChange={(e) => setOverrides(e.target.value)} rows={3} className="num w-full rounded-lg border border-line-2 bg-panel-2 p-2 text-xs outline-none focus:border-accent" />
               </Field>
-            </div>
+              </div>
+            </details>
           </Card>
           <Card>
             <Field label="Experiment name (optional)"><input value={name} onChange={(e) => setName(e.target.value)} className="h-9 w-full rounded-lg border border-line-2 bg-panel-2 px-2.5 text-sm outline-none focus:border-accent" placeholder="e.g. Baseline comparison" /></Field>
@@ -350,8 +354,8 @@ export default function Studio() {
             {history.error ? <ErrorBox error={history.error} /> : !history.data ? <Spinner /> : (
               <DataTable<Experiment> rows={history.data} rowKey={(r) => r.id} dense onRowClick={(r) => setRunning(r.id)} selectedKey={running}
                 columns={[
-                  { key: 'name', header: 'Experiment', value: (r) => r.name, render: (r) => <div><div className="font-medium">{r.name}</div><div className="num text-[11px] text-dim">{r.id}</div></div> },
-                  { key: 'mode', header: 'Mode', value: (r) => r.mode },
+                  { key: 'name', header: 'Experiment', value: (r) => r.name, render: (r) => <div className="font-medium">{r.name}</div> },
+                  { key: 'mode', header: 'Mode', value: (r) => r.mode, render: (r) => MODE_LABEL[r.mode] ?? r.mode },
                   { key: 'status', header: 'Status', value: (r) => r.status, render: (r) => <Badge tone={r.status === 'completed' ? 'ok' : r.status === 'running' || r.status === 'queued' ? 'accent' : r.status.includes('error') ? 'warn' : 'bad'}>{r.status}</Badge> },
                   { key: 'runs', header: 'Runs', align: 'right', value: (r) => r.n_completed ?? 0, render: (r) => `${r.n_completed}/${r.n_runs}` },
                   { key: 'created', header: 'Created', value: (r) => r.created_at, render: (r) => <span className="text-xs text-muted">{fmtDate(r.created_at)}</span> },

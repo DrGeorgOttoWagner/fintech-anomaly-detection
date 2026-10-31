@@ -72,7 +72,7 @@ export default function Benchmark() {
         <div className="space-y-6">
           <div className="flex flex-wrap items-center gap-3">
             <Select value={String(groupIdx)} onChange={(v) => setParams({ experiment: groups[Number(v)].experiments[0].id })} ariaLabel="Evaluation protocol"
-              options={groups.map((g, i) => ({ value: String(i), label: `Protocol ${g.protocol_id} · ${g.split.method} · ${g.runs.length} runs · ${g.experiments.map((e: Any) => e.name).join(', ').slice(0, 60)}` }))} className="max-w-[520px]" />
+              options={groups.map((g, i) => ({ value: String(i), label: `Protocol ${i + 1} · ${g.split.method} split · ${g.runs.length} runs · ${g.experiments.map((e: Any) => e.name).join(', ').slice(0, 60)}` }))} className="max-w-[520px]" />
             <span className="text-xs text-dim">Rank by</span>
             <Select value={objective} onChange={setObjective} options={OBJECTIVES} ariaLabel="Objective" />
             <Segmented value={partition} onChange={setPartition} options={[{ value: 'validation', label: 'Validation (selection)' }, { value: 'test', label: 'Test (final estimate)' }]} />

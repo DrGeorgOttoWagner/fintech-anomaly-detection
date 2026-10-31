@@ -90,6 +90,12 @@ table{{border-collapse:collapse;font-size:13px;margin:8px 0 16px;min-width:50%}}
 th{{background:#f3f6f8}} caption{{caption-side:top;text-align:left;color:var(--muted);font-style:italic;padding-bottom:4px}}
 .tw{{overflow-x:auto}} figure{{margin:16px 0}} figure svg{{max-width:100%;height:auto}} figcaption{{color:var(--muted);font-size:13px;font-style:italic}}
 .note{{border-left:3px solid var(--accent);padding:6px 12px;background:#f0f7f6;color:#264}}
+h2,h3{{break-after:avoid;page-break-after:avoid}} h2+*,h3+*{{break-before:avoid;page-break-before:avoid}}
+figure{{break-inside:avoid;page-break-inside:avoid}} figcaption{{break-before:avoid}}
+tr,li,.note{{break-inside:avoid;page-break-inside:avoid}} thead{{display:table-header-group}}
+@page{{size:A4;margin:18mm 16mm}}
+@media print{{body{{max-width:none;margin:0;padding:0;font-size:11pt}} h2{{margin-top:22px}}
+ figure svg{{max-height:120mm;width:100%}} .tw{{overflow:visible}} table{{font-size:9pt}} a{{color:inherit;text-decoration:none}}}}
 </style></head><body><h1>{html.escape(self.title)}</h1>{''.join(body)}</body></html>"""
 
 

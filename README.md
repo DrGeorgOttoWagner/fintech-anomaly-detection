@@ -11,8 +11,10 @@ protocol → inspect individual anomalies → export reproducible research evide
 ![FastAPI](https://img.shields.io/badge/FastAPI-backend-009688?logo=fastapi&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.9-F7931E?logo=scikitlearn&logoColor=white)
+![Version](https://img.shields.io/badge/version-1.0.0-2dd4bf)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Local only](https://img.shields.io/badge/data-stays%20local-2dd4bf)
+![Platform](https://img.shields.io/badge/platform-macOS%20%C2%B7%20Apple%20Silicon-lightgrey?logo=apple)
 
 </div>
 
@@ -121,10 +123,19 @@ FTAD/
 
 Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
 
-## Installation
+## Installation (macOS)
 
-Requirements: Python 3.12+, Node.js 20+, and on macOS the OpenMP runtime for XGBoost/LightGBM
-(`brew install libomp`).
+**Supported platform:** macOS only. Tested on macOS / Apple Silicon (Apple M3 Pro, macOS 27).
+Other operating systems are not supported or tested in v1.0.0.
+
+Requirements: [Homebrew](https://brew.sh), Python 3.12+, Node.js 20+ and the OpenMP runtime used by
+XGBoost and LightGBM:
+
+```bash
+brew install python@3.12 node libomp
+```
+
+Then:
 
 ```bash
 git clone https://github.com/<you>/fintech-anomaly-detection.git
@@ -161,6 +172,10 @@ Experiments store dataset fingerprint, schema hash, split indices, seeds, config
 versions and fitted pipelines. `Reproduce` re-runs an experiment identically; manifests are exported
 with every report. See [docs/REPRODUCIBILITY.md](docs/REPRODUCIBILITY.md).
 
+## Release
+
+Current release: **FinTech Anomaly Detection v1.0.0** — see [CHANGELOG.md](CHANGELOG.md) and the [release checklist](docs/RELEASE_CHECKLIST.md).
+
 ## Testing
 
 ```bash
@@ -185,7 +200,7 @@ see [docs/EXTENDING.md](docs/EXTENDING.md).
 - Kernel SVM, kNN, LOF, One-Class SVM and classic Gradient Boosting train on capped stratified subsamples by default.
 - Training cannot be interrupted inside a single model fit; cancellation terminates the worker process.
 - Test metrics on datasets with few positives are uncertain; FTAD does not yet report bootstrap confidence intervals.
-- The optional PyTorch autoencoder is not included in v1.0 (extension point documented).
+- The optional PyTorch autoencoder is not included in v1.0.0 (extension point documented).
 
 ## Roadmap
 
@@ -198,7 +213,7 @@ see [docs/EXTENDING.md](docs/EXTENDING.md).
 
 ## Responsible use
 
-FTAD is a research tool. Its outputs are statistical associations and model scores, not decisions.
+FTAD v1.0.0 is a stable local research software release — not a certified or production fraud-detection service, and no model it trains is claimed to be universally valid. FTAD is a research tool. Its outputs are statistical associations and model scores, not decisions.
 An anomaly is not necessarily fraud; large amounts are not by themselves evidence of fraud; model
 probabilities are not calibrated unless explicitly calibrated. Any operational use requires
 independent validation, monitoring and human oversight.

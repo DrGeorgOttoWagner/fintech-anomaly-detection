@@ -246,7 +246,7 @@ export default function Schema() {
           <ErrorBox error={saveErr} />
           {saved && (
             <Callout tone="ok" title="Schema confirmed">
-              <span className="text-xs">Analyses now use this mapping (hash {schema?.hash.slice(0, 8)}).</span>
+              <span className="text-xs">All analyses now use this mapping.</span>
               <div className="mt-2"><Button size="sm" variant="primary" onClick={() => nav('/explore')}>Explore the data</Button></div>
             </Callout>
           )}
